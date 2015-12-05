@@ -1,14 +1,31 @@
 @(tools: List[Tool])
 
-@cts.main("Welcome") {
+@main("Tools") {
 
-<h3>Tool Description</h3>
+<h3 align="center">Tool Description</h3>
 
-@for(tool <- tools) {
-<ul>
-    <li>@tool.title</li>
-    }
-</ul>
+<body style="background-color:lightyellow">
+<form action="@routes.Website.create()" method="post" align="center">
 
+    Tool Name : <input type = "text" name="toolname" style="font-size:90%" >
+    <br><br>
+    Owner : <input type = "text" name="owner" style="font-size:90%" >
+    <br><br>
+    Description : <input type = "text" name="desc" style="font-size:90%" >
+    <br><br>
+    Category :<select name="tooltype" id="ttype"  >
+
+    <option value="id1">Hand Tools</option>
+    <option value="id2">Power Tools</option>
+    </select><!--<input type = "text" name="toolname" style="font-size:90%" >-->
+    <br><br>
+
+    <br><br>
+    <button>Upload new tool</button>
+
+
+
+</form>
+</body>
 
 }

@@ -1,9 +1,9 @@
 package controllers;
 import models.User;
-import models.Tool;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.data.Form;
+import models.Tool;
 import java.util.List;
 
 public class Website extends Controller {
@@ -15,32 +15,46 @@ public class Website extends Controller {
 
 
 
-    //public Result create(){
-    //Tool tool = Form.form(Tool.class).bindFromRequest().get();
-    //tool.save();
-    //flash ("success", "Saved new tool" + tool.title);
-    //return redirect(routes.Website.show(tool.id));
-    //}
-    public Result register()  {
+    public Result create(){
+    Tool tool = Form.form(Tool.class).bindFromRequest().get();
+    tool.save();
+    flash ("success", "Saved new tool" + tool.name);
+    return redirect(routes.Website.tools());
+    }
+
+    public Result register() {
 
         User user = Form.form(User.class).bindFromRequest().get();
 
         user.save();
-        flash ("success", "Your account has been created successfully" + user.name);
+        flash("success", "Your account has been created successfully" + user.name);
 
         return ok(views.html.cts.register.render());
     }
 
+    public Result gtools(){
 
+        List<Tool> tool = Tool.find.all();
+    //    Tool tool1 = Tool.find.byId(id);
+        flash("hello");
+       return ok(views.html.cts.tools.render(tool));
+      //  return ok(views.html.cts.buy.render(tool));
+        //   return ok("buy page");
+    }
 
     public Result tools(){
 
-        return ok(views.html.cts.tools.render());
+      //  List<Tool> tool = Tool.find.all();
+        return redirect(routes.Website.tools());
+      //  return ok(views.html.cts.tools.render(tool));
+        //   return ok("buy page");
     }
 
-    public Result buy(){
 
-            return ok(views.html.cts.buy.render());
+    public Result buy(Long id){
+
+        Tool tool = Tool.find.byId(id);
+            return ok(views.html.cts.buy.render(tool));
      //   return ok("buy page");
     }
 
@@ -62,8 +76,8 @@ public class Website extends Controller {
         if (tool == null)
             return notFound("Not Found\n");
         else
-            return ok(views.html.cts.show.render(tool));
-
+            return ok(views.html.cts.buy.render(tool));
+        //return ok("show page");
     }
 
 
@@ -88,4 +102,67 @@ public class Website extends Controller {
     //}*/
 
 
+
+  /*  #GET     /users                      controllers.Website.register()
+
+            #POST     /create                     controllers.Website.create()
+            #GET    /tools1/:id                   controllers.Website.tools(id:Long)
+            #GET    /buy/:id                        controllers.Website.buy(id:Long)
+
+            #POST    /tools                      controllers.Website.payeeinfo()
+            #POST    /tools/confirmation         controllers.Website.confirmation()
+            # POST     /tools/:id                  controllers.Website.show(id:Long)*/
+
 }
+
+/*public class UploadImageForm{
+        public FilePart image;
+
+        public String validate(){
+            MultipartFormData data = request().body().asMultipartFormData();
+            image= data.getFile("image");
+
+            if(image==null){
+
+                return "File is missing";
+
+
+            }
+            return null;
+        }
+
+    }
+
+    public Result uploadImage(){
+        Form<UploadImageForm> form = form(UploadImageForm.class).bindFromRequest();
+
+        if(form.hasErrors()) {
+            return badRequest(index.render(form, Tool.find.all()));//"bad request"));
+        }
+        else {
+            new Tool(
+                    form.get().image.getFilename(),
+                    form.get().image.getFile());
+
+            flash("success","file uploaded");
+            return redirect(routes.Website.index());
+
+
+        }
+
+
+    public Result getImage(Long id){
+        Tool image = Tool.find.byId(id);
+        if(image!=null){
+            //return ok(views.html.cts.tools.render(tool));
+            return ok(image.data).as("image");
+        }
+        else{
+           flash("error","Picture not available");
+        //   return redirect(routes.Website.tools(image));
+            return ok("tools page error");
+        }
+
+    }
+
+    }*/
