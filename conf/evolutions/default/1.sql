@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table tools (
-  id                        bigint not null,
+  id                        bigserial not null,
   name                      varchar(255),
   description               varchar(255),
   owner                     varchar(255),
@@ -15,45 +15,32 @@ create table tools (
 ;
 
 create table toolcategory (
-  cid                       bigint not null,
+  cid                       bigserial not null,
   cname                     varchar(255),
   constraint pk_toolcategory primary key (cid))
 ;
 
-create table user (
-  id                        bigint not null,
-  name                      varchar(255),
-  email                     varchar(255),
+create table users (
+  id                        bigserial not null,
   username                  varchar(255),
-  password                  varchar(255),
+  password_hash             varchar(255),
+  firstname                 varchar(255),
+  lastname                  varchar(255),
+  address                   varchar(255),
+  email                     varchar(255),
   phone                     varchar(255),
-  constraint pk_user primary key (id))
+  constraint uq_users_username unique (username),
+  constraint pk_users primary key (id))
 ;
-
-create sequence tools_seq;
-
-create sequence toolcategory_seq;
-
-create sequence user_seq;
 
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+drop table if exists tools cascade;
 
-drop table if exists tools;
+drop table if exists toolcategory cascade;
 
-drop table if exists toolcategory;
-
-drop table if exists user;
-
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists tools_seq;
-
-drop sequence if exists toolcategory_seq;
-
-drop sequence if exists user_seq;
+drop table if exists users cascade;
 
