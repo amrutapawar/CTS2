@@ -27,4 +27,16 @@ public class Search extends Controller{
     //    }
      //   return ok();
     }
+
+    public Result viewcomment(Long id){
+        Tool tool = Tool.find.where().idEq(id).findUnique();
+    if(tool==null){
+        flash("No comments");
+        return ok(views.html.cts.buy.render(tool));
+    }
+        else
+            return ok(views.html.cts.buy.render(tool));
+
+
+    }
 }

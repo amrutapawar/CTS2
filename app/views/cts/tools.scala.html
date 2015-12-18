@@ -2,10 +2,12 @@
 
 @main("Toollist") {
 
-<h1 align="center">Community Tool Sharing</h1>
+<h1 align="center"  style="color:green">ToolShare</h1>
 <body style="background-color: lightyellow">
+<h3><a href="@routes.Website.index()">Click here to upload a new tool</a></h3>
+<h3><a href="@routes.Website.welcome()">Logout</a></h3>
 
-<form action="@routes.Search.search()" method="post"  ><br><br><br><br><br>
+<form action="@routes.Search.search()" method="post"  ><br><br><br>
        <select style="font-size:90%" name="categories">
         <option value="id0" selected="selected">Search by category</option>
         <option value="hand tools">Hand Tools</option>
@@ -32,9 +34,9 @@
 </form>
 
 @if(tool.isEmpty()) {
-<h2>No tools available</h2>
+<h3>No tools available</h3>
 }else{
-<h2>List of tools available</h2>
+<h3>List of tools available</h3>
 <ul>
     @for(t <- tool){
 
@@ -43,4 +45,5 @@
     }
 </ul>
 }
+</body>
 }
