@@ -4,46 +4,45 @@
 
 <h1 align="center"  style="color:green">ToolShare</h1>
 <body style="background-color: lightyellow">
-<h3><a href="@routes.Website.index()">Click here to upload a new tool</a></h3>
-<h3><a href="@routes.Website.welcome()">Logout</a></h3>
+<center><br>
+    <h3><a href="@routes.Users.index()">Click here to upload a new tool</a></h3>
+    <h3><a href="@routes.Users.welcome()">Logout</a></h3>
 
-<form action="@routes.Search.search()" method="post"  ><br><br><br>
-       <select style="font-size:90%" name="categories">
-        <option value="id0" selected="selected">Search by category</option>
-        <option value="hand tools">Hand Tools</option>
-        <option value="power tools">Power Tools</option>
+    <form action="@routes.Search.search()" method="post"  ><br><br><br>
+        <select style="font-size:90%" name="categories">
+            <option value="id0" selected="selected">Search by category</option>
+            <option value="hand tools">Hand Tools</option>
+            <option value="power tools">Power Tools</option>
 
 
-    </select>
- <!--   <select name="t_category" id="tool">
-        <option value="id0" selected="selected">Search by category</option>
+        </select>
+        <!--   <select name="t_category" id="tool">
+               <option value="id0" selected="selected">Search by category</option>
+               @for(t <- tool){
+                   <option value="@t.category">@t.name</option>
+               }-->
+
+
+
+        </select>
+
+        <button><b>Search</b></button>
+
+    </form>
+    <br>
+
+    @if(tool.isEmpty()) {
+    <h3 style="color:blue">Sorry! No available tools in this category</h3>
+    }else{
+    <h3 style="color:blue">List of available tools</h3>
+    <ul>
         @for(t <- tool){
-            <option value="@t.category">@t.name</option>
 
-        }-->
+        <li><a href="@routes.Tools.buy(t.id)">@t.name</a></li>
 
-
-
-    </select>
-
-    <button>Search</button>
-
-
-
-
-</form>
-
-@if(tool.isEmpty()) {
-<h3>No tools available</h3>
-}else{
-<h3>List of tools available</h3>
-<ul>
-    @for(t <- tool){
-
-    <li><a href="@routes.Website.buy(t.id)">@t.name</a></li>
-
+        }
+    </ul>
     }
-</ul>
-}
+</center>
 </body>
 }

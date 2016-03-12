@@ -1,8 +1,11 @@
-/*package controllers;
+package controllers;
+
+/**
+ * Created by Imen on 2/6/2016.
+ */
 
 import models.Borrower;
 import models.Tool;
-import models.User;
 import play.data.DynamicForm;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -11,97 +14,8 @@ import java.util.List;
 
 import static play.data.Form.form;
 
-public class Website extends Controller {
 
-    public Result welcome() {
-        return ok(views.html.cts.welcome.render());
-     //   return redirect(routes.Website.welcome());
-    }
-
-    public Result index() {
-        List<Tool> tools = Tool.find.all();
-        return ok(views.html.cts.index.render(tools));
-    }
-
-
-
-    //post
-    public Result register(){
-
-        DynamicForm userForm = form().bindFromRequest();
-        String username = userForm.data().get("username");
-        String password = userForm.data().get("password");
-        String firstname = userForm.data().get("firstname");
-        String lastname = userForm.data().get("lastname");
-        String email = userForm.data().get("email");
-        String phone = userForm.data().get("phone");
-        String address = userForm.data().get("address");
-
-
-
-        User user = User.createUser(username,password);
-
-        if(user == null) {
-            flash("error", "Invalid user");
-            return redirect(routes.Website.welcome());
-        }
-
-
-        user.username = username;
-        user.password_hash = password;
-        user.firstname = firstname;
-        user.lastname = lastname;
-        user.email = email;
-        user.phone = phone;
-        user.address = address;
-
-        user.save();
-        flash("success", "Welcome new user " + user.username);
-        session("user_id", user.id.toString());
-
-        List<Tool> tool = Tool.find.all();
-        return ok(views.html.cts.tools.render(tool));
-      //  return redirect(routes.Website.tools());
-    }
-
-    //get
-    public Result registerUI()  {
-
-        return ok(views.html.cts.register.render());
-    }
-
-    //get
-    public Result loginUI() {
-
-        return ok(views.html.cts.login.render());
-    }
-
-
-    //post
-    public Result login(){
-
-
-        DynamicForm userForm = form().bindFromRequest();
-        String username = userForm.data().get("username");
-        String password = userForm.data().get("password");
-
-        User user = User.find.where().eq("username", username).findUnique();
-
-        if (user != null && user.authenticate(user, password)) {
-            session("user_id", user.id.toString());
-            flash("success", "Welcome " + user.username);
-        } else {
-            flash("error", "Invalid login. Check your credentials information please.");
-        }
-
-        return redirect(routes.Website.tools());
-    }
-
-
-    public Result logout() {
-        session().remove("user_id");
-        return redirect(routes.Website.welcome());
-    }
+public class Tools extends Controller {
 
     //@Security.Authenticated(UserAuth.class)
     public Result create()
@@ -124,9 +38,9 @@ public class Website extends Controller {
         tool.comment = comment;
         tool.save();
         flash ("success", "Saved new tool" + tool.name);
-     //   return ok(views.html.cts.tools.render(tool));
-       return redirect(routes.Website.tools());
-      //  return ok();
+        //   return ok(views.html.cts.tools.render(tool));
+        return redirect(routes.Tools.tools());
+        //  return ok();
     }
 
 
@@ -143,7 +57,7 @@ public class Website extends Controller {
     public Result tools(){
 
         List<Tool> tool = Tool.find.all();
-        //return redirect(routes.Website.tools());
+        //return redirect(routes.Users.tools());
         return ok(views.html.cts.tools.render(tool));
         //   return ok("buy page");
     }
@@ -163,6 +77,7 @@ public class Website extends Controller {
 
     public Result confirmation()
     {
+
         return ok(views.html.cts.confirmation.render());
     }
 
@@ -172,7 +87,7 @@ public class Website extends Controller {
         String lname =  bform.data().get("lastname");
         String add = bform.data().get("address");
         String city =  bform.data().get("city");
-        String state = bform.data().get("state");
+        //String state = bform.data().get("state");
         String zip =  bform.data().get("zip");
         String email = bform.data().get("email");
         String phone =  bform.data().get("phone");
@@ -182,14 +97,15 @@ public class Website extends Controller {
         bor.lastname=lname;
         bor.address=add;
         bor.city=city;
-        bor.state=state;
+        //bor.state=state;
         bor.zip=zip;
+        bor.email=email;
         bor.phone=phone;
 
         bor.save();
 
         return ok(views.html.cts.confirmation.render());
-    //    return redirect(routes.Website.confirmation());
+        //    return redirect(routes.Users.confirmation());
 
     }
 
@@ -208,5 +124,4 @@ public class Website extends Controller {
         //return ok("show page");
     }
 
-
-} */
+}

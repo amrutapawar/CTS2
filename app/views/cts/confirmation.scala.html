@@ -6,6 +6,9 @@
 
 </head>
 <body style="background-color:lightyellow"><br><br>
-<h2 style="color:green">Borrower's Details has been verified and the tool(s) is borrowed.</h2>
+<form action="@routes.Sendmail.sendemail()" method="post">
+<h2 style="color:green">Borrower's Details has been verified and the tool(s) is borrowed.Please check your email.</h2>
+    <button><center>Click here</center></button>
+</form>
 </body>
 </html>
