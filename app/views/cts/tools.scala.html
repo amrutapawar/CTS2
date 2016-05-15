@@ -19,7 +19,7 @@
         <!--   <select name="t_category" id="tool">
                <option value="id0" selected="selected">Search by category</option>
                @for(t <- tool){
-                   <option value="@t.category">@t.name</option>
+                   <option value="@t.category">@t.toolname</option>
                }-->
 
 
@@ -38,7 +38,7 @@
     <ul>
         @for(t <- tool){
 
-        <li><a href="@routes.Tools.buy(t.id)">@t.name</a></li>
+        <li><a href="@routes.Tools.buy(t.id)">@t.toolname</a></li>
 
         }
     </ul>

@@ -5,7 +5,10 @@ import play.data.validation.Constraints;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
+
 
 
 @Entity
@@ -16,7 +19,7 @@ public class Tool extends Model {
     public Long id;
 
     @Constraints.Required
-    public String name;
+    public String toolname;
 
     @Constraints.Required
     public String description;
@@ -28,8 +31,12 @@ public class Tool extends Model {
     @Constraints.Required
     public String category;
 
+    @OneToMany
+    public List<Comments> commentbody;
 
-    public String comment;
+
+    //public static Finder<Long, Tool> find = new Finder<Long,Tool>(Tool.class);
+    public static Finder<Long, Tool> find = new Finder<Long,Tool>(Tool.class);
 
 
-    public static Finder<Long, Tool> find = new Finder<Long,Tool>(Tool.class);}
+}

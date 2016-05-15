@@ -11,11 +11,11 @@ public class UserAuth extends Security.Authenticator {
     // When return is null, Authentication failed
     @Override
     public String getUsername(final Http.Context ctx) {
-        String userIdStr = ctx.session().get("user_id");
+        String userIdStr = ctx.session().get("id");
         if(userIdStr == null) return null;
 
-        User user = User.find.where().eq("username", userIdStr).findUnique();
-        return (user != null ? user.username : null);
+        User user = User.find.byId(Long.parseLong(userIdStr));
+        return (user != null ? user.getId() : null);
 
     }
 

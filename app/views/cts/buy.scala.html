@@ -1,32 +1,44 @@
-@(tool:Tool)
+@(tool:Tool,c:List[Comments])
 
 @main("tools"){
 <h2 align="center" style="color:green">Details of the Tool</h2>
 <body style="background-color:lightyellow"  ><br><br>
 <form action="@routes.Tools.payeeinfo()" method="get">
     <center>
-        <label style="font-size:120%"><b>  Tool Name : </b></label>         @tool.name<br><br>
+        <label style="font-size:120%"><b>  Tool Name : </b></label>         @tool.toolname<br><br>
         <label style="font-size:120%" ><b> Owner of the Tool :</b> </label> @tool.owner<br><br>
         <label style="font-size:120%"><b>  Description : </b> </label>      @tool.description<br><br>
         <label style="font-size:120%"><b>  Tool Category : </b> </label>    @tool.category<br><br>
         <br>
 
-        <button style="font-size:90%; width:30 px; height:50px"><b>Borrow</b></button> <br> <br>
-        <!--<a href="@routes.Search.viewcomment(tool.id)">View Comments</a>-->
+        <button style="font-size:90%; width:30 px; height:30px"><b>Borrow</b></button> <br> <br>
+     
 
     </center>
+
+</form>
+<p>
+    <label style="font-size:110%"><b> View Comments </b></label><br>
+    @for(cc <- c){
+
+    <b>User :</b> @cc.user.getName() </br>
+    <b>Posted :</b> @cc.dt <br>
+    <b>Comment :</b> @cc.commentbody <br>
+    <br>
+    }
+</p>
+
+<form action="@routes.Search.addcomment(tool.id)" method="post">
+    <left>
+
+        <button style="font-size:90%; width:30 px; height:30px"><b>Add Comment</b></button> <br> <br>
+        <textarea name="commentbody" rows="6" cols="75"></textarea>
+    </left>
 </form>
 
+
 <br>
-<center>
-    <h3 style="color:blue">Comments</h3>
-    <ul>
 
-        <p>@tool.comment</p>
-
-
-    </ul>
-</center>
 
 </body>
 

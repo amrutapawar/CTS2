@@ -5,10 +5,8 @@ import com.avaje.ebean.Model;
 import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Table(name="users")
 @Entity
@@ -17,12 +15,11 @@ public class User extends Model {
     @Id
     public Long id;
 
-
     @Constraints.Required
     @Column(unique=true)
     public String username;
 
-    @Constraints.Required
+    //@Constraints.Required
     public String password_hash;
 
     @Constraints.Required
@@ -31,18 +28,19 @@ public class User extends Model {
     @Constraints.Required
     public String lastname;
 
-   // @Constraints.Required
+   // @Constraints.Required;
     public String address;
 
     @Constraints.Required
     public String email;
 
-
     public String phone;
 
+    @OneToMany
+    public List<Comments> commentbody;
 
-    // Finder object for easier querying
-    public static Finder<String, User> find = new Finder(String.class, User.class);
+        // Finder object for easier querying
+    public static Finder<Long, User> find = new Finder<Long,User>(User.class);
 
     // NOT FOR PRODUCTION - must ensure this is a valid user first. I have not done that.
 
@@ -56,13 +54,24 @@ public class User extends Model {
         }
     }
 
+    public String getId(){
+        return this.id.toString();
 
-    public static User createUser(String username, String password){
+    }
+
+    public String getName(){
+       // System.out.println(this.username.toString());
+        return this.username.toString();
+    }
+
+
+    public static User createUser(String username, String password,String firstname, String lastname, String email,String phone, String address){
 
 
         // requirements for username and password
-        if(password==null || username==null && password.length()<8)
+        if((password==null || username==null) && password.length()<8)
         {
+           // flash("error","fields cannot be empty");
             return null;
         }
 
@@ -75,7 +84,11 @@ public class User extends Model {
 
         user.username = username;
         user.password_hash = passwordHash;
-
+        user.firstname = firstname;
+        user.lastname = lastname;
+        user.email = email;
+        user.phone = phone;
+        user.address = address;
 
         return user;
     }

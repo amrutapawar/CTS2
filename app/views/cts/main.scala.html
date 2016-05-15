@@ -41,8 +41,17 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 
-<img src="@routes.Assets.versioned("images/pic3.png")" style="width:1374px;height:308px" align="center">
-<body style="background-color: lightyellow">
+
+<body style="background-color: lightyellow" class="container">
+<div class="img">
+    <div class="col-md-12 col-sm-12">
+    <left><img class="img" src="@routes.Assets.versioned("images/hand_tools.png")" width="500px" height="208px" ></img></left>
+
+    <right><img class="img" src="@routes.Assets.versioned("images/pic2.png")" width="402px" height="208px" ></img></right>
+    <right><img class="img" src="@routes.Assets.versioned("images/power tool.png")" width="432px" height="208px" ></img></right>
+    @content
+    </div>
+</div>
 <h1 style="color:green"><center>Welcome to ToolShare!</center></h1>
 
 <h3 style="color:green;font-size:20px" ><center>This is a web application to share tools between people in a community from all the boroughs</center></h3>
@@ -63,9 +72,7 @@
 </div>
 
 <br><br>
-
-
-
 @content
+
 </body>
 </html>

@@ -14,20 +14,20 @@ import java.util.Properties;
 public class Sendmail extends Controller {
 
     String to = "communitytoolsharing@gmail.com";
-     String from = "communitytoolsharing@gmail.com";
-     String password = "";
+    String from = "communitytoolsharing@gmail.com";
+     String password = "toolshare";
     String host = "smtp.gmail.com";
 
     public Result sendemail()
     {
         Properties props = System.getProperties();
-        props.put("mail.smtp.host",host) ;
+
       //  props.put("mail.smtp.socketFactory.port","465");
       //  props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth","true");
         props.put("mail.smtp.starttls.enable","true");
-
-        props.put("mail.smtp.port","465");
+        props.put("mail.smtp.host","smtp.gmail.com") ;
+        props.put("mail.smtp.port","587");
 
         //props.setProperty("mail.smtp.host",host);
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -42,7 +42,7 @@ public class Sendmail extends Controller {
             String from = "communitytoolsharing@gmail.com";
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
-           // message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject("Confirmation from CTS");
             message.setContent("This is an email from cts","text/html");

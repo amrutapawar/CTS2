@@ -40,4 +40,8 @@ public class Borrower extends Model {
     @Constraints.Required
     public String phone;
 
-    public static Finder<Long, Borrower> find = new Finder<Long,Borrower>(Borrower.class);}
+    //public static Finder<Long, Borrower> find = new Finder<Long,Borrower>(Borrower.class);
+    public static Finder<Long, Borrower> find = new Finder<Long,Borrower>(Borrower.class);
+
+
+}

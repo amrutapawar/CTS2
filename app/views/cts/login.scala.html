@@ -12,6 +12,15 @@
 <body>
 <h2><center><b>Login Page</b></center></h2>
 
+@if(flash.containsKey("error")){
+<center>
+    <div class="alert alert-danger">
+        @flash.get("error")
+    </div>
+</center>
+}
+
+
 <form action="@routes.Users.login()" method="post">
     <center>
         <br>

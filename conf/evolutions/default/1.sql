@@ -16,20 +16,22 @@ create table borrowerdetails (
   constraint pk_borrowerdetails primary key (id))
 ;
 
+create table comments (
+  cid                       bigserial not null,
+  user_id                   bigint,
+  tool_id                   bigint,
+  commentbody               varchar(255),
+  dt                        timestamp,
+  constraint pk_comments primary key (cid))
+;
+
 create table tools (
   id                        bigserial not null,
-  name                      varchar(255),
+  toolname                  varchar(255),
   description               varchar(255),
   owner                     varchar(255),
   category                  varchar(255),
-  comment                   varchar(255),
   constraint pk_tools primary key (id))
-;
-
-create table toolcategory (
-  cid                       bigserial not null,
-  cname                     varchar(255),
-  constraint pk_toolcategory primary key (cid))
 ;
 
 create table users (
@@ -45,6 +47,10 @@ create table users (
   constraint pk_users primary key (id))
 ;
 
+alter table comments add constraint fk_comments_user_1 foreign key (user_id) references users (id);
+create index ix_comments_user_1 on comments (user_id);
+alter table comments add constraint fk_comments_tool_2 foreign key (tool_id) references tools (id);
+create index ix_comments_tool_2 on comments (tool_id);
 
 
 
@@ -52,9 +58,9 @@ create table users (
 
 drop table if exists borrowerdetails cascade;
 
-drop table if exists tools cascade;
+drop table if exists comments cascade;
 
-drop table if exists toolcategory cascade;
+drop table if exists tools cascade;
 
 drop table if exists users cascade;
 

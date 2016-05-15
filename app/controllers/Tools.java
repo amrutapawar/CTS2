@@ -1,10 +1,8 @@
 package controllers;
 
-/**
- * Created by Imen on 2/6/2016.
- */
 
 import models.Borrower;
+import models.Comments;
 import models.Tool;
 import play.data.DynamicForm;
 import play.mvc.Controller;
@@ -23,32 +21,38 @@ public class Tools extends Controller {
         //Tool tool = Form.form(Tool.class).bindFromRequest().get();
         flash ("success", "Saved new tool" );
         DynamicForm userForm = form().bindFromRequest();
-        String name = userForm.data().get("name");
+        String name = userForm.data().get("toolname");
         String owner = userForm.data().get("owner");
         String description = userForm.data().get("description");
         String category = userForm.data().get("category");
-        String comment = userForm.data().get("comment");
+       // String comment = userForm.data().get("commentbody");
         Tool tool = new Tool();
 
 
-        tool.name = name;
+        tool.toolname = name;
         tool.owner = owner;
         tool.description = description;
         tool.category = category;
-        tool.comment = comment;
+        //tool.commentbody = comment;
         tool.save();
-        flash ("success", "Saved new tool" + tool.name);
+
+
+
+        flash ("success", "Saved new tool" + tool.toolname);
         //   return ok(views.html.cts.tools.render(tool));
         return redirect(routes.Tools.tools());
         //  return ok();
     }
 
 
+
+
+
     public Result gtools(){
 
         List<Tool> tool = Tool.find.all();
         //    Tool tool1 = Tool.find.byId(id);
-        flash("hello");
+
         return ok(views.html.cts.tools.render(tool));
         //  return ok(views.html.cts.buy.render(tool));
         //   return ok("buy page");
@@ -66,7 +70,8 @@ public class Tools extends Controller {
     public Result buy(Long id){
 
         Tool tool = Tool.find.byId(id);
-        return ok(views.html.cts.buy.render(tool));
+        List<Comments> comments = Comments.find.where().eq("tool",tool).findList();
+        return ok(views.html.cts.buy.render(tool,comments));
         //   return ok("buy page");
     }
 
@@ -92,6 +97,11 @@ public class Tools extends Controller {
         String email = bform.data().get("email");
         String phone =  bform.data().get("phone");
 
+        if(fname.trim().length()==0 || lname.trim().length() == 0 || add.trim().length() == 0 || city.trim().length() == 0 || email.trim().length()== 0 || zip.trim().length()==0||phone.trim().length()==0) {
+            flash("error", "Required fields cannot be empty");
+            return redirect(routes.Tools.payeeinfo());
+        }
+
         Borrower bor = new Borrower();
         bor.firstname=fname;
         bor.lastname=lname;
@@ -112,7 +122,7 @@ public class Tools extends Controller {
 
 
 
-    public Result show(Long id) {
+    /*public Result show(Long id) {
         //Query the database for a Tool with this id
         Tool tool = Tool.find.byId(id);
 
@@ -122,6 +132,6 @@ public class Tools extends Controller {
         else
             return ok(views.html.cts.buy.render(tool));
         //return ok("show page");
-    }
+    }*/
 
 }
